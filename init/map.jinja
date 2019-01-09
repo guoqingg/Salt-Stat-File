@@ -1,0 +1,27 @@
+{% set init = salt['grains.filter_by']({
+  'RedHat': {
+    'server_address': '10.81.65.220',
+    'agent_name': salt['grains'].get('id'),
+    'logrotate_conf_directory': '/etc/logrotate.d',
+    'logrotate_package': 'logrotate',
+    'conf_file': 'history.sh',
+    'scripts_list': [
+      '/etc/sysconfig/bash-prompt-xterm',
+      '/etc/sysconfig/bash-prompt-screen',
+      '/etc/sysconfig/bash-prompt-default',
+      ],
+    'login_split': '<login>',
+    'log_directory': '/var/log/history',
+    'log_file': 'history.log',
+    'logrotate': True,
+    'logrotate_conf_file': 'history',
+    'rotate_frequency': 'yearly',
+    'rotate_keep': 5,
+    'user_list': [
+      'zhangqiang',
+      'wangguoqing',
+      'zhangpeng',
+      'aragorn',
+],
+    },
+  } , merge = salt['pillar'].get('init',{})) %}

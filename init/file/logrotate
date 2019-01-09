@@ -1,0 +1,11 @@
+{%- from "init/map.jinja" import init with context -%}
+
+{{ init.log_directory }}/{{ init.log_file }}
+{
+	{{ init.rotate_frequency }}
+	rotate	{{ init.rotate_keep }}
+	dateext
+	missingok
+	nocompress
+	create 002 root root
+}

@@ -1,0 +1,5 @@
+{% set mysql = salt['grains.filter_by']({
+  'RedHat': {
+    'MySQL_Server_ID': salt['grains'].get('server_id'),
+    },
+  } , merge = salt['pillar'].get('mysql',{})) %}

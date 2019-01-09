@@ -1,0 +1,14 @@
+{% set php = salt['grains.filter_by']({
+    'RedHat': {
+      'conf_dir': '/data/conf/php7',
+      'log_dir': '/data/logs/php7',
+      'php_version': 'php-7.0.6',
+      'php_basedir': '/usr/local/php7',
+      'conf_file': '/data/conf/php7/php-fpm.conf',
+      'ini_file': '/data/conf/php7/php.ini',
+      'pid_file': '/data/run/php-fpm.pid',
+      'pid_dir': '/data/run',
+      'service_file': '/etc/init.d/php7-fpm',
+      'sbin_dir_file': '/usr/local/php7/sbin/php-fpm',
+    },
+}, grain='os_family', merge=salt['pillar.get']('php')) %}

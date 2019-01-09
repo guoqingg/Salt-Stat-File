@@ -1,0 +1,3 @@
+{%- from "init/map.jinja" import init with context -%}
+HISTORY_FILE={{ init.log_directory }}/{{ init.log_file }}
+date "+%Y-%m-%d %T #### USER:$USER IP:$SSH_CLIENT PS:$SSH_TTY pwd=$PWD #### $(history 1 | { read x y z cmd; echo "$cmd"; })" >>$HISTORY_FILE

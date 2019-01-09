@@ -1,0 +1,8 @@
+{% set rabbitmq = salt['grains.filter_by']({
+  'RedHat': {
+    'erlang_dir': '/usr/local/erlang',
+    'target_dir': '/usr/local/rabbitmq',
+    'sbin_dir': '/usr/local/rabbitmq/sbin',
+    'man_dir': '/usr/local/rabbitmq/man',
+  },
+}, merge = salt['pillar'].get('rabbitmq',{})) %}

@@ -1,0 +1,55 @@
+{%- from 'service/rabbitmq/map.jinja' import rabbitmq with context -%}
+#!/bin/sh
+#
+# chkconfig:   - 20 80
+# description: Starts and stops the redis daemon.
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+#export PATH=/usr/local/bin:/usr/local/erlang/bin:$PATH
+export HOME=/root
+# file_descriptors 1024 to 65535
+ulimit -n 65536
+rabbitmq_server="{{ rabbitmq.sbin_dir }}/rabbitmq-server"
+rabbitmq_ctl="{{ rabbitmq.sbin_dir }}/rabbitmqctl"
+
+start() {
+    $rabbitmq_server -detached
+}
+
+stop() {
+    $rabbitmq_ctl stop
+}
+
+restart() {
+    stop
+    start
+}
+
+status() {
+    $rabbitmq_ctl status
+}
+
+
+case "$1" in
+    start)
+        start && exit 0
+        $1
+        ;;
+    stop)
+        stop || exit 0
+        $1
+        ;;
+    restart)
+	restart || exit 0
+        $1
+        ;;
+    status)
+        status
+	$1
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart}"
+        exit 2
+esac
+exit $?

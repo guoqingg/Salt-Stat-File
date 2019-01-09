@@ -1,0 +1,7 @@
+{% set pg = salt['grains.filter_by']({
+    'RedHat': {
+      'pg_version': 'postgresql-10.5',
+      'pg_basedir': '/usr/local/pgsql',
+    },
+}, grain='os_family', merge=salt['pillar.get']('pg')) %}
+

@@ -1,0 +1,6 @@
+{% set redis = salt['grains.filter_by']({
+  'RedHat': {
+    'base_dir': '/usr/local/redis',
+    'port': '6760',
+    },
+}, merge = salt['pillar'].get('redis',{})) %}

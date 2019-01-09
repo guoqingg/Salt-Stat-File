@@ -1,0 +1,81 @@
+{%- from 'service/redis/map.jinja' import redis with context -%}
+#!/bin/sh
+#
+# redis - this script starts and stops the redis-server daemon
+#
+# chkconfig:   - 85 15
+# description:  Redis is a persistent key-value database
+# processname: redis-server
+# config:      /etc/redis/redis.conf
+# config:      /etc/sysconfig/redis
+# pidfile:     /var/run/redis.pid
+
+redis="{{ redis.base_dir }}/bin/redis-server"
+prog=$(basename $redis)
+
+configs="/data/conf/redis/redis-6760.conf"
+
+pidFiles="/data/redis/6760.pid"
+
+start() {
+    [ -x $redis ] || exit 5
+    echo -n $"Starting $prog: "
+    for config in $configs; do
+	su -c "$redis $config" nobody -s /bin/bash
+    done
+    retval=$?
+    echo
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    for pidFile in $pidFiles; do
+        if [ -f "$pidFile" ]; then
+            kill `cat $pidFile`
+        fi
+    done
+    retval=$?
+    echo
+    return $retval
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+reload() {
+    echo -n $"Reloading $prog: "
+    for pidFile in $pidFiles; do
+        if [ -f "$pidFile" ]; then
+            kill -HUP `cat $pidFile`
+        fi
+    done
+    retval=$?
+    echo
+    return $retval
+}
+
+force_reload() {
+    restart
+}
+
+case "$1" in
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        $1
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|reload}"
+        exit 2
+esac
