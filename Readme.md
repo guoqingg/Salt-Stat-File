@@ -1,4 +1,4 @@
-# 参考各github上大神后自己写的一些saltstack的mode
+# 参考各github上大神后自己写的一些saltstack的编排文件
 
 因github文件大小限制删除以下安装包
 - percona-server-5.6.29-76.2.tar.gz
